@@ -78,10 +78,20 @@ NSString *apiUrl = [ReactNativeConfig envFor:@"API_URL"];
 NSDictionary *config = [ReactNativeConfig env];
 ```
 
-They're also available for configuration in `Info.plist`, by prepending `__RN_CONFIG_` to their name:
+Variables can be also used in `Info.plist` by prepending `__RN_CONFIG_` to their name:
 
 ```
-__RN_CONFIG_API_URL
+#.env.production
+GOOGLE_IOS_URL_SCHEME=com.googleusercontent.apps.1234-ab123456
+```
+
+```
+<key>CFBundleTypeRole</key>
+<string>Editor</string>
+<key>CFBundleURLSchemes</key>
+<array>
+    <string>__RN_CONFIG_GOOGLE_IOS_URL_SCHEME</string>
+</array>
 ```
 
 Note: Requires specific setup (see below) and a `Product > Clean` is required after changing the values to see the updated values.
