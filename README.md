@@ -9,6 +9,8 @@ Bring some [12 factor](http://12factor.net/config) love to your mobile apps!
 
 Create a new file `.env` in the root of your React Native app:
 
+*Note:* no spaces otherwise this won't work.
+
 ```
 API_URL=https://myapi.com
 GOOGLE_MAPS_API_KEY=abcdefgh
@@ -139,7 +141,7 @@ Then edit the newly created scheme to make it use a different env file. From the
 - Click "Pre-actions", and under the plus sign select "New Run Script Action"
 - Where it says "Type a script or drag a script file", type:
   ```
-  echo ".env.staging" > /tmp/envfile   # replace .env.staging for your file
+  if [ "${ENVFILE}" ]; then echo "${ENVFILE}" > /tmp/envfile ; else echo ".env" > /tmp/envfile; fi
   ```
 
 This is still a bit experimental and dirty – let us know if you have a better idea on how to make iOS use different configurations opening a pull request or issue!
@@ -158,6 +160,16 @@ Link the library:
 ```
 $ react-native link react-native-config
 ```
+
+### Manual Linking iOS
+
+The Ruby pre-script doesn't seem to work with RN 0.49+ and CocoaPods so as per the [manual linking docs](https://facebook.github.io/react-native/docs/linking-libraries-ios.html), add the `../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj` to your project.
+
+![](https://facebook.github.io/react-native/docs/assets/AddToLibraries.png)
+
+In your Target settings, Build Phases, Link Binary With Libraries, add `libReactNativeConfig.a`.
+
+![](https://user-images.githubusercontent.com/6455482/35905536-96a8d386-0bf8-11e8-9c02-f36c29ef036f.png)
 
 
 ### Extra step for Android
